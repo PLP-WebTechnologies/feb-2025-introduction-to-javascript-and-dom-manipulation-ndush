@@ -23,17 +23,13 @@ Respond to user interactions.
 - Use at least 5 different HTML elements.
 - Ensure semantic correctness.
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dynamic Content Example</title>
+  <title>JavaScript DOM Manipulation Example</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
@@ -41,61 +37,54 @@ Respond to user interactions.
   </header>
 
   <nav>
-    <ul>
-      <li><a href="#section1">Intro</a></li>
-      <li><a href="#section2">Features</a></li>
-    </ul>
+    <button id="toggle-btn">Add Paragraph</button>
   </nav>
 
   <main>
-    <section id="section1">
-      <h2>Introduction</h2>
-      <p id="intro-text">This paragraph will update dynamically.</p>
+    <section>
+      <p id="dynamic-text">This text will change dynamically.</p>
     </section>
 
-    <section id="section2">
-      <h2>Interactive Section</h2>
-      <button id="toggle-btn">Add Element</button>
-      <div id="dynamic-container"></div>
-    </section>
+    <article id="extra-content">
+      <!-- Extra paragraph will be added/removed here -->
+    </article>
   </main>
 
   <footer>
-    <small>&copy; 2025 My Website</small>
+    <small>© 2025 Your Name</small>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
 
 
+// Change text content dynamically after 2 seconds
+setTimeout(() => {
+  const dynamicText = document.getElementById('dynamic-text');
+  dynamicText.textContent = 'The text has been changed by JavaScript!';
+}, 2000);
 
-document.addEventListener('DOMContentLoaded', () => {
-  const introText = document.getElementById('intro-text');
-  const mainTitle = document.getElementById('main-title');
-  const toggleBtn = document.getElementById('toggle-btn');
-  const container = document.getElementById('dynamic-container');
+// Modify CSS style dynamically
+const mainTitle = document.getElementById('main-title');
+mainTitle.style.color = 'darkblue';
+mainTitle.style.fontFamily = 'Arial, sans-serif';
 
-  // Change text content dynamically
-  introText.textContent = 'Here is some updated text content added via JavaScript.';
+// Add or remove a paragraph when button clicked
+const button = document.getElementById('toggle-btn');
+const extraContent = document.getElementById('extra-content');
 
-  // Modify CSS styles dynamically
-  mainTitle.style.color = 'darkblue';
-  mainTitle.style.fontFamily = 'Arial, sans-serif';
-
-  // Toggle adding/removing an element on button click
-  toggleBtn.addEventListener('click', () => {
-    if (container.childElementCount === 0) {
-      const newElement = document.createElement('p');
-      newElement.textContent = 'This element was added dynamically!';
-      newElement.style.backgroundColor = '#eef';
-      newElement.style.padding = '10px';
-      newElement.style.borderRadius = '5px';
-      container.appendChild(newElement);
-      toggleBtn.textContent = 'Remove Element';
-    } else {
-      container.innerHTML = '';
-      toggleBtn.textContent = 'Add Element';
-    }
-  });
+button.addEventListener('click', () => {
+  if (!document.getElementById('added-paragraph')) {
+    const newParagraph = document.createElement('p');
+    newParagraph.id = 'added-paragraph';
+    newParagraph.textContent = 'This paragraph was added dynamically!';
+    newParagraph.style.color = 'green';
+    extraContent.appendChild(newParagraph);
+    button.textContent = 'Remove Paragraph';
+  } else {
+    const para = document.getElementById('added-paragraph');
+    extraContent.removeChild(para);
+    button.textContent = 'Add Paragraph';
+  }
 });
-
-Happy Coding! 💻✨
